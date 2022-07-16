@@ -53,8 +53,9 @@ def main():
 
     #==============================================================================
     
-    url_data = (r'https://github.com/pierswalker71/Sentiment-Analysis-Restaurant-Reviews/blob/main/Restaurant_Reviews.tsv')
-    input_data = pd.read_csv(url_data,delimiter='\t')
+    #url_data = (r'https://github.com/pierswalker71/Sentiment-Analysis-Restaurant-Reviews/blob/main/Restaurant_Reviews.tsv')
+    input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
+    
     
     st.dataframe(input_data)
     
