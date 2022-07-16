@@ -5,3 +5,5 @@ spacy>=2.2.0,<3.0.0
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.0/en_core_web_sm-2.2.0.tar.gz
 
 scikit-learn==1.1.1
+
+Keras==2.9.0
