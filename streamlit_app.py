@@ -53,11 +53,15 @@ def main():
 
     #==============================================================================
     
-    #url_data = (r'https://github.com/pierswalker71/Sentiment-Analysis-Restaurant-Reviews/blob/main/Restaurant_Reviews.tsv')
+    # Load data
     input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
     
     
     st.dataframe(input_data)
+    
+    # Create corpus us review text, removing stop words and other characters
+    text_list = input_data['Review']
+    corpus = lemmatization(text_list, en, stopwords)
     
     countvector = CountVectorizer()
     X = countvector.fit_transform(corpus).toarray()
