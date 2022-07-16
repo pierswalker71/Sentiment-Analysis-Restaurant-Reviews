@@ -92,7 +92,7 @@ def main():
     #def 
 
     confusion_matrix = confusion_matrix(y_test, y_pred)
-    print ("Confusion Matrix:\n",cm)
+    
     acc = accuracy_score(y_test, y_pred)
     prec = precision_score(y_test, y_pred)
     recall = recall_score(y_test, y_pred)
