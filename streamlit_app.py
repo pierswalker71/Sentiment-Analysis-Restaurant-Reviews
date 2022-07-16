@@ -98,6 +98,7 @@ def main():
     recall = recall_score(y_test, y_pred)
     
     st.write('confusion_matrix')
+    st.write(confusion_matrix)
     st.write(f'accuracy: {round(acc*100,2)} %')
     st.write(f'precision: {round(prec*100,2)} %')
     st.write(f'recall: {round(recall*100,2)} %')      
