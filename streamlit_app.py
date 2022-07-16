@@ -41,16 +41,15 @@ def main():
     # Functions 
     
     def lemmatization(text_list, en, stopwords):
-    corpus = []
-    for txt in text_list:
-        new_text = re.sub(pattern='[^a-zA-z]', repl=' ', string=txt)
-        new_text = new_text.lower()
-        new_text = en(new_text)
-        new_text = [token.lemma_ for token in new_text if str(token) not in stopwords]
-        new_text = ' '.join(new_text)
-        corpus.append(new_text)
-
-    return corpus 
+        corpus = []
+        for txt in text_list:
+            new_text = re.sub(pattern='[^a-zA-z]', repl=' ', string=txt)
+            new_text = new_text.lower()
+            new_text = en(new_text)
+            new_text = [token.lemma_ for token in new_text if str(token) not in stopwords]
+            new_text = ' '.join(new_text)
+            corpus.append(new_text)
+        return corpus 
 
     #==============================================================================
     
