@@ -3,8 +3,10 @@ import streamlit as st
 def main():
     # Imports
     
-   import pandas as pd
-   import re 
+    import pandas as pd
+    import re 
+    import spacy
+    en = spacy.load("en_core_web_md")
     
     # Settings
     st.set_page_config(page_title = 'Sentiment Analysis') 
