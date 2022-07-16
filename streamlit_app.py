@@ -129,7 +129,7 @@ def main():
           
 
     st.header('Predictions')
-    new_comments = ['Food was really good!','I am loving it','I hate waiting in this restaurant','staff were great']
+    new_comments = ['I liked the soup','Loved the beef','I hate waiting in this restaurant','staff were great']
     text_spacy = lemmatization(new_comments, en, stopwords)
 
     st.write(text_spacy)
