@@ -87,9 +87,9 @@ def main():
     prec = precision_score(y_test,y_pred)
     recall = recall_score(y_test,y_pred)
     
-    print(f'accuracy: {round(acc*100,2)} %)
-    print(f'precision: {round(prec*100,2)} %)
-    print(f'recall: {round(recall*100,2)} %)      
+    print(f'accuracy: {round(acc*100,2)} %')
+    print(f'precision: {round(prec*100,2)} %')
+    print(f'recall: {round(recall*100,2)} %')      
           
           
     input_dim = X.shape[1]
