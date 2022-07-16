@@ -6,7 +6,7 @@ def main():
     import pandas as pd
     import re 
     import spacy
-    en = spacy.load("en_core_web_md")
+    en = spacy.load("en_core_web_sm")
     
     # Settings
     st.set_page_config(page_title = 'Sentiment Analysis') 
