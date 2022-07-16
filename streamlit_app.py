@@ -133,7 +133,7 @@ def main():
     #new_comments = st.text_input(label='new review', value=['I liked the soup'])
     text_spacy = lemmatization(new_comments, en, stopwords)
     
-    st.write('key word compoents in your review')
+    st.write('key word componets in your review')
     st.write(text_spacy)
 
     # Make prediction
