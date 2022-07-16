@@ -129,7 +129,7 @@ def main():
           
 
     st.header('Predictions')
-    new_comments = ['I liked the soup','Loved the beef','I hate waiting in this restaurant','staff were great']
+    new_comments = ['I liked the soup','I hate waiting in this restaurant','Loved the beef','staff were great']
     #new_comments = st.text_input(label='new review', value=['I liked the soup'])
     text_spacy = lemmatization(new_comments, en, stopwords)
     
