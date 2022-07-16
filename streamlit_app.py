@@ -54,10 +54,12 @@ def main():
     #==============================================================================
     
     # Load data
+    st.header('Load review data')
     input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
-    
-    
+
     st.dataframe(input_data)
+    
+    # 
     
     # Create corpus us review text, removing stop words and other characters
     text_list = input_data['Review']
@@ -69,9 +71,10 @@ def main():
     
     #countvector.get_feature_names_out()
     
+    # Train classifier
+    
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
-    
-    
+
     # MultinomialNB
     classifier = MultinomialNB(alpha=0.1)
     model_type = 'sklearn'
@@ -84,14 +87,17 @@ def main():
     #classifier.fit(X_train, y_train)
     #y_pred = classifier.predict(X_test)
     
-    classifier = LogisticRegression()
-
-    cm = confusion_matrix(y_test, y_pred)
-    print ("Confusion Matrix:\n",cm)
-    acc = accuracy_score(y_test,y_pred)
-    prec = precision_score(y_test,y_pred)
-    recall = recall_score(y_test,y_pred)
+    #classifier = LogisticRegression()
     
+    #def 
+
+    confusion_matrix = confusion_matrix(y_test, y_pred)
+    print ("Confusion Matrix:\n",cm)
+    acc = accuracy_score(y_test, y_pred)
+    prec = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    
+    st.write('confusion_matrix')
     st.write(f'accuracy: {round(acc*100,2)} %')
     st.write(f'precision: {round(prec*100,2)} %')
     st.write(f'recall: {round(recall*100,2)} %')      
@@ -121,13 +127,15 @@ def main():
     #y_pred = binary_values
           
 
+    st.header('Predictions')
     new_comments = ['Food was really good!','I am loving it','I hate waiting in this restaurant','staff were great']
     text_spacy = lemmatization(new_comments, en, stopwords)
 
-    #print(text_spacy)
+    st.write(text_spacy)
 
     # Make prediction
-    #prediction = classifier.predict(countvector.transform(text_spacy))
+    prediction = classifier.predict(countvector.transform(text_spacy))
+   
 
     #if model_type == 'keras':
     #    continuous_values = prediction
@@ -140,7 +148,7 @@ def main():
     #            binary_values.append(1)
     #    prediction = binary_values
 
-    #print(prediction)
+    st.write(prediction)
     
     
     
