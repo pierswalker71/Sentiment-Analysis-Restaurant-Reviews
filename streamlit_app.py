@@ -21,6 +21,11 @@ def main():
     
     from sklearn.svm import SVC
 
+    from sklearn.ensemble import RandomForestClassifier
+
+
+    from sklearn.neural_network import MLPClassifier
+
     from keras.models import Sequential
     from keras.layers import Dense,Dropout
 
@@ -98,6 +103,8 @@ def main():
     classifier = MultinomialNB(alpha=0.1)
     #classifier = BernoulliNB(alpha=0.1)  
     #classifier = SVC() #kernel='linear
+    #classifier = MLPClassifier()
+    classifier = RandomForestClassifier()
 
     model_type = 'sklearn'
     classifier.fit(X_train, y_train)
