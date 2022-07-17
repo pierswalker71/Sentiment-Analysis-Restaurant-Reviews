@@ -44,7 +44,7 @@ def main():
         corpus = []
         if type(text_list)==str:
             new_list = []
-            text_list = new_list.append(new_list)
+            text_list = new_list.append(text_list)
         for txt in text_list:
             new_text = re.sub(pattern='[^a-zA-z]', repl=' ', string=txt)
             new_text = new_text.lower()
