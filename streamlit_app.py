@@ -42,7 +42,7 @@ def main():
     
     def lemmatization(text_list, en, stopwords):
         corpus = []
-        if type(text_list)==str:
+        if isinstance(text_list, str):
             new_list = []
             text_list = new_list.append(text_list)
         for txt in text_list:
