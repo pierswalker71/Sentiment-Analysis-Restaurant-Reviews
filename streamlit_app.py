@@ -97,7 +97,7 @@ def main():
     #classifier = LogisticRegression()
     #classifier = MultinomialNB(alpha=0.1)
     #classifier = BernoulliNB(alpha=0.1)  
-    classifier = SVC(kernel='linear')
+    classifier = SVC() #kernel='linear
 
     model_type = 'sklearn'
     classifier.fit(X_train, y_train)
