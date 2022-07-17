@@ -38,9 +38,10 @@ def main():
     st.write('Piers Walker 2022. https://github.com/pierswalker71')
     st.write('This tool is capable of establishing whether restaurant reviews are positive or negative.')
     st.write('It does this by training a machine learning model on an open data source with prelabled reviews.')
-    st.write('The machine learning model first extracts the key components of the text, dropping irrelevant words, and reducing each one to its root meaning.')
-    st.write('The classification model then learns which words correspond to either positive or negative sentiment.')
-    st.write('Once trained, the model is capable of making predictions on new review text')
+    st.write('The machine learning model first extracts the key components of each review text, dropping irrelevant words, and simplifying each word to its root meaning.')
+    st.write('The classification model then learns which groups of words correspond to either positive or negative sentiment.')
+    st.write('Once trained, the model is capable of making predictions on brand new review text.')
+    st.write('Try it out yourself by providing your own culinary review.')
 
 
     #==============================================================================
@@ -140,8 +141,8 @@ def main():
           
 
     st.header('Predictions')
-    st.write('Provide a new restaurant review for the model to analyse.')   #new_comments = ['I liked the soup','I hate waiting in this restaurant','Loved the beef','staff were great']
-    new_comments = st.text_input(label='Provide a new review', value='I liked the soup')
+    #st.write('Provide a new restaurant review for the model to analyse.')   #new_comments = ['I liked the soup','I hate waiting in this restaurant','Loved the beef','staff were great']
+    new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
     st.write('key word components in your review')
