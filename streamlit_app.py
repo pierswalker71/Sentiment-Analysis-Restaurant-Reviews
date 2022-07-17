@@ -22,6 +22,8 @@ def main():
     from keras.models import Sequential
     from keras.layers import Dense,Dropout
 
+    from sklearn.metrics import roc_auc_score
+    from sklearn.metrics import f1_score
     from sklearn.metrics import confusion_matrix
     from sklearn.metrics import accuracy_score
 
@@ -135,6 +137,8 @@ def main():
     acc = accuracy_score(y_test, y_pred)
     prec = precision_score(y_test, y_pred)
     recall = recall_score(y_test, y_pred)
+    auc = roc_auc_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
     
     st.write('confusion_matrix')
     st.write(confusion_matrix)
@@ -142,7 +146,8 @@ def main():
     st.write(f'precision: {round(prec*100,2)} %')
     st.write(f'recall: {round(recall*100,2)} %')      
           
-          
+    st.write(f'roc_auc_score: {round(auc*100,2)}')
+    st.write(f'f1 score: {round(f1*100,2)}')       
       
           
    
