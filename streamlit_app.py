@@ -36,7 +36,13 @@ def main():
     # Title
     st.title('Sentiment Analysis - Restaurant Reviews')
     st.write('Piers Walker 2022. https://github.com/pierswalker71')
-    
+    st.write('This tool is capable of establishing whether restaurant reviews are positive or negative')
+    st.write('It does this by employing machine learning models on an open data source with prelabled reviews')
+    st.write('The machine learning model extracts the key components of the text, dropping irrelevant words, then reducing each word to its root meaning')
+    st.write('The classification model then learns which words correspond to either positive or negative sentiment')
+    st.write('Once trained it is then able to make predictions with unseen review text')
+
+
     #==============================================================================
     # Functions 
     
