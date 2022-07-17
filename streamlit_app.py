@@ -45,7 +45,7 @@ def main():
         if isinstance(text_list, str):
             new_list = []
             #text_list = new_list.append(text_list)
-            text_list = ['the fish was delicious','waste of time']
+            text_list = ['the fish was delicious']
         for txt in text_list:
             new_text = re.sub(pattern='[^a-zA-z]', repl=' ', string=txt)
             new_text = new_text.lower()
