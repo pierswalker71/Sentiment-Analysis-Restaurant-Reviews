@@ -117,7 +117,7 @@ def main():
     #classifier = MLPClassifier()
     #classifier = RandomForestClassifier()
 
-    if model_type == 'keras'
+    if model_type == 'keras':
         input_dim = X.shape[1]
         classifier = Sequential()
     
