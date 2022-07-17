@@ -16,15 +16,15 @@ def main():
     from sklearn.model_selection import train_test_split
 
     from sklearn.naive_bayes import MultinomialNB
-    from sklearn.naive_bayes import BernoulliNB
-    from sklearn.linear_model import LogisticRegression
+    #from sklearn.naive_bayes import BernoulliNB
+    #from sklearn.linear_model import LogisticRegression
     
     from sklearn.svm import SVC
 
-    from sklearn.ensemble import RandomForestClassifier
+    #from sklearn.ensemble import RandomForestClassifier
 
 
-    from sklearn.neural_network import MLPClassifier
+    #from sklearn.neural_network import MLPClassifier
 
     from keras.models import Sequential
     from keras.layers import Dense,Dropout
@@ -108,36 +108,38 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
     # select model 
+    #model_type = 'keras'
+    model_type = 'MultinomialNB'
     #classifier = LogisticRegression()
-    classifier = MultinomialNB(alpha=0.1)
+    #classifier = MultinomialNB(alpha=0.1)
     #classifier = BernoulliNB(alpha=0.1)  
     #classifier = SVC() #kernel='linear
     #classifier = MLPClassifier()
-   # classifier = RandomForestClassifier()
+    #classifier = RandomForestClassifier()
 
-    model_type = 'sklearn'
-    classifier.fit(X_train, y_train)
-    y_pred = classifier.predict(X_test)
-
+    if model_type == 'keras'
+        input_dim = X.shape[1]
+        classifier = Sequential()
     
-    
-    
-    # Keras neural network 
-
-    input_dim = X.shape[1]
-
-    #classifier = Sequential()
-    #model_type = 'keras'
-    #classifier.add(Dense(2000, input_dim=input_dim))
-    #classifier.add(Dropout(0.5))
-    #classifier.add(Dense(2000))
-    #classifier.add(Dropout(0.5))
-    #classifier.add(Dense(1, activation="sigmoid"))
-    #classifier.compile(loss='binary_crossentropy', metrics='accuracy')
-    #classifier.fit(X_train, y_train, epochs=20,)    
+        classifier.add(Dense(2000, input_dim=input_dim))
+        classifier.add(Dropout(0.5))
+        classifier.add(Dense(2000))
+        classifier.add(Dropout(0.5))
+        classifier.add(Dense(1, activation="sigmoid"))
+        classifier.compile(loss='binary_crossentropy', metrics='accuracy')
    
-    #continuous_values = classifier.predict(X_test)
-    y_pred = threshold_to_binary(continuous_values)
+    elif model_type == 'MultinomialNB':
+        classifier = MultinomialNB(alpha=0.1)
+
+    # Make prediction
+    if model_type == 'keras': # Keras neural network        
+        classifier.fit(X_train, y_train, epochs=20,)    
+        continuous_values = classifier.predict(X_test)
+        y_pred = threshold_to_binary(continuous_values)
+
+    else: #model_type == 'sklearn'
+        classifier.fit(X_train, y_train)
+        y_pred = classifier.predict(X_test)     
 
 
 
