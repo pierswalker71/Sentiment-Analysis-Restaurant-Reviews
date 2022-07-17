@@ -57,20 +57,30 @@ def main():
     # Functions 
     
     def lemmatization(text_list, en, stopwords):
+        # Creates a corpus of text from a list of sentences
+        
         corpus = []
         if isinstance(text_list, str):
-            #new_list = []
-            #text_list = new_list.append(text_list)
             text_list = [text_list]
         for txt in text_list:
-            new_text = re.sub(pattern='[^a-zA-z]', repl=' ', string=txt)
+            new_text = re.sub(pattern='[^a-zA-z]', repl=' ', string=txt) # Removes non-alpha characters
             new_text = new_text.lower()
             new_text = en(new_text)
             new_text = [token.lemma_ for token in new_text if str(token) not in stopwords]
             new_text = ' '.join(new_text)
             corpus.append(new_text)
         return corpus 
-
+    #-----------------------------------------------------------------------------
+    def threshold_to_binary(continuous_values):
+        # Converts list of coeficients to binary, 0 or 1, based on threshold of 0.5 
+        
+        binary_values = []
+        for i in continuous_values:
+            if i[0]<0.5:
+                binary_values.append(0)
+            else:
+                binary_values.append(1)
+        return binary_values
     #==============================================================================
     
     # Load data
@@ -91,14 +101,13 @@ def main():
     
     #countvector.get_feature_names_out()
     
+     
     # Train classifier
+    st.header('Select and train model') 
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
-    st.header('Select and train model')     
-
     # select model 
-
     #classifier = LogisticRegression()
     classifier = MultinomialNB(alpha=0.1)
     #classifier = BernoulliNB(alpha=0.1)  
@@ -128,15 +137,9 @@ def main():
     #classifier.fit(X_train, y_train, epochs=20,)    
    
     #continuous_values = classifier.predict(X_test)
+    y_pred = threshold_to_binary(continuous_values)
 
-    # Convert to binary
-    #binary_values = []
-    #for i in continuous_values:
-    #    if (i[0]<0.5):
-    #        binary_values.append(0)
-    #    else:
-    #        binary_values.append(1)
-    #y_pred = binary_values
+
 
  #def 
 
@@ -157,7 +160,7 @@ def main():
     st.write(f'precision: {round(prec*100,2)} %')
     st.write(f'recall: {round(recall*100,2)} %')      
           
-    st.write(f'roc_auc_score: {round(auc*100,2)}')
+    st.write(f'roc auc score: {round(auc*100,2)}')
     st.write(f'f1 score: {round(f1*100,2)}')       
       
           
@@ -176,16 +179,16 @@ def main():
     prediction = classifier.predict(countvector.transform(text_spacy))
    
 
-    #if model_type == 'keras':
-    #    continuous_values = prediction
-    #    # Convert to binary
-    #    binary_values = []
-    #    for i in continuous_values:
-    #        if (i[0]<0.5):
-    #            binary_values.append(0)
-    #        else:
-    #            binary_values.append(1)
-    #    prediction = binary_values
+    if model_type == 'keras':
+        continuous_values = prediction
+        # Convert to binary
+        binary_values = []
+        for i in continuous_values:
+            if i[0]<0.5:
+                binary_values.append(0)
+            else:
+                binary_values.append(1)
+        prediction = binary_values
     
     st.write('Here is my prediction')
     st.write(prediction)
