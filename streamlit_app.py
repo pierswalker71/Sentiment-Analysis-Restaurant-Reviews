@@ -18,6 +18,8 @@ def main():
     from sklearn.naive_bayes import MultinomialNB
     from sklearn.naive_bayes import BernoulliNB
     from sklearn.linear_model import LogisticRegression
+    
+    from sklearn.svm import SVC
 
     from keras.models import Sequential
     from keras.layers import Dense,Dropout
@@ -90,10 +92,12 @@ def main():
 
     st.header('Select and train model')     
 
-    # MultinomialNB
+    # select model 
+
+    #classifier = LogisticRegression()
     #classifier = MultinomialNB(alpha=0.1)
     #classifier = BernoulliNB(alpha=0.1)  
-    classifier = LogisticRegression()
+    classifier = SVC(kernel='linear')
 
     model_type = 'sklearn'
     classifier.fit(X_train, y_train)
