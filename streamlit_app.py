@@ -104,7 +104,7 @@ def main():
     #classifier = BernoulliNB(alpha=0.1)  
     #classifier = SVC() #kernel='linear
     #classifier = MLPClassifier()
-    classifier = RandomForestClassifier()
+   # classifier = RandomForestClassifier()
 
     model_type = 'sklearn'
     classifier.fit(X_train, y_train)
