@@ -36,11 +36,11 @@ def main():
     # Title
     st.title('Sentiment Analysis - Restaurant Reviews')
     st.write('Piers Walker 2022. https://github.com/pierswalker71')
-    st.write('This tool is capable of establishing whether restaurant reviews are positive or negative')
-    st.write('It does this by employing machine learning models on an open data source with prelabled reviews')
-    st.write('The machine learning model extracts the key components of the text, dropping irrelevant words, then reducing each word to its root meaning')
-    st.write('The classification model then learns which words correspond to either positive or negative sentiment')
-    st.write('Once trained it is then able to make predictions with unseen review text')
+    st.write('This tool is capable of establishing whether restaurant reviews are positive or negative.')
+    st.write('It does this by training a machine learning model on an open data source with prelabled reviews.')
+    st.write('The machine learning model first extracts the key components of the text, dropping irrelevant words, and reducing each one to its root meaning.')
+    st.write('The classification model then learns which words correspond to either positive or negative sentiment.')
+    st.write('Once trained, the model is capable of making predictions on new review text')
 
 
     #==============================================================================
@@ -71,7 +71,7 @@ def main():
     
     # 
     
-    # Create corpus us review text, removing stop words and other characters
+    # Create corpus of review text, removing stop words and other characters
     text_list = input_data['Review']
     corpus = lemmatization(text_list, en, stopwords)
     
@@ -101,6 +101,7 @@ def main():
     
     #def 
 
+    st.header('Model performance')
     confusion_matrix = confusion_matrix(y_test, y_pred)
     
     acc = accuracy_score(y_test, y_pred)
@@ -139,8 +140,8 @@ def main():
           
 
     st.header('Predictions')
-    #new_comments = ['I liked the soup','I hate waiting in this restaurant','Loved the beef','staff were great']
-    new_comments = st.text_input(label='new review', value='I liked the soup')
+    st.write('Provide a new restaurant review for the model to analyse.')   #new_comments = ['I liked the soup','I hate waiting in this restaurant','Loved the beef','staff were great']
+    new_comments = st.text_input(label='Provide a new review', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
     st.write('key word components in your review')
@@ -161,7 +162,7 @@ def main():
     #            binary_values.append(1)
     #    prediction = binary_values
     
-    st.write('prediction')
+    st.write('Here is my prediction')
     st.write(prediction)
     
     
