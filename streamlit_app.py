@@ -161,7 +161,7 @@ def main():
     #==============================================================================
     # Make prediction using user entered review text
     
-    st.header('New restuarant review')
+    st.header('Enter new restuarant review')
     new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
