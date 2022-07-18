@@ -176,7 +176,7 @@ def main():
                  
     # Retrain classifier on whole dataset
     if model_type == 'Neural Network':
-        pass()
+        pass
     else:
         classifier.fit(X, y)                 
 
