@@ -44,7 +44,7 @@ def main():
     st.write('The classification model then learns which groups of words correspond to either positive or negative sentiment.')
     st.write('Once trained, the model is capable of making predictions on brand new review text.')
     st.write('Try it out yourself by providing your own culinary review.')
-    st.write('Note: different machine learning models may be selected from the side bar. Their training performance wil be presented underneith')
+    st.write('Note: different machine learning models may be selected from the side bar. Their training performance is presented underneigth')
 
 
     #==============================================================================
