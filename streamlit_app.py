@@ -84,8 +84,8 @@ def main():
         st.dataframe(input_data)
         pos = len(input_data[input_data['Liked']==1].index)
         neg = len(input_data[input_data['Liked']==0].index)
-        st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg))%)}')
-        st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg))%)}')
+        st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg),2)}%)')
+        st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg),2)}%)')
                                                  
     # Create corpus of review text, removing stop words and other characters
     text_list = input_data['Review']
