@@ -157,7 +157,7 @@ def main():
     text_spacy = lemmatization(new_comments, en, stopwords)
     
     st.write('key word components in your review')
-    st.text(text_spacy)
+    st.text(text_spacy[0])
                  
     # Retrain classifier on whole dataset
     if model_type == 'Neural Network':
