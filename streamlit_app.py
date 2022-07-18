@@ -87,9 +87,10 @@ def main():
     st.header('Load review data')
     input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
 
-    st.dataframe(input_data)
+    with st.expander('Current data'):
+        st.dataframe(input_data)
     
-    # 
+
     
     # Create corpus of review text, removing stop words and other characters
     text_list = input_data['Review']
@@ -108,7 +109,8 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
     # select model 
-    model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
+    with st.sidebar:
+        model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
     #model_type = 'keras'
     #model_type = 'MultinomialNB'
     #classifier = LogisticRegression()
