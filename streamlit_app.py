@@ -156,18 +156,18 @@ def main():
     new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
-    st.write('key word components found in your review:')
+    st.write(f'key word components found in your review: {text_spacy[0]}')
     #st.text(text_spacy[0])
     
-    html_str = f"""
-    <style>
-    p.a {{
-      font: bold {font_size}px Courier;
-    }}
-    </style>
-    <p class="a">{text_spacy[0]}</p>
-    """
-    st.markdown(html_str, unsafe_allow_html=True)
+    #html_str = f"""
+    #<style>
+    #p.a {{
+    #  font: bold {font_size}px Courier;
+    #}}
+    #</style>
+    #<p class="a">{text_spacy[0]}</p>
+    #"""
+    #st.markdown(html_str, unsafe_allow_html=True)
                  
     # Retrain classifier on whole dataset
     if model_type == 'Neural Network':
