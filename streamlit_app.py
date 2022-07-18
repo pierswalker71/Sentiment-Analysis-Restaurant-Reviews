@@ -9,7 +9,7 @@ def main():
     import re 
     
     import spacy
-    en = spacy.load("en_core_web_sm")
+    en = spacy.load("en_core_web_md")
     stopwords = en.Defaults.stop_words
 
     from sklearn.feature_extraction.text import CountVectorizer
@@ -70,7 +70,7 @@ def main():
         
         binary_values = []
         for i in continuous_values:
-            if i[0]<0.5:
+            if i[0] < 0.5:
                 binary_values.append(0)
             else:
                 binary_values.append(1)
@@ -101,7 +101,7 @@ def main():
     # Train classifier
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
-    # select model 
+    # Select model 
     with st.sidebar:
         st.header('Select model') 
         model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
@@ -128,7 +128,6 @@ def main():
         continuous_values = classifier.predict(X_test)
         y_pred = threshold_to_binary(continuous_values)
     else:
-        # Make prediction
         classifier.fit(X_train, y_train)
         y_pred = classifier.predict(X_test)     
 
@@ -162,22 +161,19 @@ def main():
     # Make prediction using user entered review text
     
     st.header('Enter new restuarant review')
-    new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
+    new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='the soup was delightful')
     text_spacy = lemmatization(new_comments, en, stopwords)
-    
- 
-           
-               
-
+         
     # Make prediction
     prediction = classifier.predict(countvector.transform(text_spacy))
-
+    
+    # Convert continuous vaues to binary if required
     if model_type == 'Neural Network':
         continuous_values = prediction
-        # Convert to binary
+        
         binary_values = []
         for i in continuous_values:
-            if i[0]<0.5:
+            if i[0] < 0.5:
                 binary_values.append(0)
             else:
                 binary_values.append(1)
