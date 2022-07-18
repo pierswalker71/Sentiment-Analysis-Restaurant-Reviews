@@ -153,19 +153,21 @@ def main():
         st.write(f'f1 score: {round(f1*100,2)}')         
     
     #==============================================================================
+    # Retrain classifier on whole dataset
+    if model_type == 'Neural Network':
+        pass
+    else:
+        classifier.fit(X, y)  
+    #==============================================================================
     # Make prediction using user entered review text
     
     st.header('New restuarant review')
     new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
-    st.write(f'key word components found in your review: [{text_spacy[0]}]')  
+ 
            
-    # Retrain classifier on whole dataset
-    if model_type == 'Neural Network':
-        pass
-    else:
-        classifier.fit(X, y)                 
+               
 
     # Make prediction
     prediction = classifier.predict(countvector.transform(text_spacy))
@@ -181,8 +183,9 @@ def main():
                 binary_values.append(1)
         prediction = binary_values
         
-    st.header('Evaluation')     
-    st.write('My prediction:')
+    st.header('Evaluation')    
+    st.write(f'key word components found in your review: [{text_spacy[0]}]') 
+    st.write('\nMy prediction:')
     if prediction == 1:
         st.markdown('**I think this is a positive review comment**')
     else:
