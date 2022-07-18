@@ -48,7 +48,7 @@ def main():
     st.write('The classification model then learns which groups of words correspond to either positive or negative sentiment.')
     st.write('Once trained, the model is capable of making predictions on brand new review text.')
     st.write('Try it out yourself by providing your own culinary review.')
-    st.write('Note: different machine learning models may be selected from the side bar. Their training performance is presented underneigth')
+    st.write('Note: Different machine learning models may be selected from the side bar. Their training performance is presented underneigth.')
 
 
     #==============================================================================
@@ -155,11 +155,11 @@ def main():
         st.header('Model training performance')
         st.write('confusion_matrix')
         st.write(confusion_matrix)
-        st.write(f'accuracy: {round(acc*100,2)} %')
-        st.write(f'precision: {round(prec*100,2)} %')
-        st.write(f'recall: {round(recall*100,2)} %')      
+        st.write(f'Accuracy: {round(acc*100,2)} %')
+        st.write(f'Precision: {round(prec*100,2)} %')
+        st.write(f'Recall: {round(recall*100,2)} %')      
           
-        st.write(f'roc auc score: {round(auc*100,2)}')
+        st.write(f'Roc auc score: {round(auc*100,2)}')
         st.write(f'f1 score: {round(f1*100,2)}')         
     
     
