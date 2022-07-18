@@ -35,6 +35,10 @@ def main():
     # Settings
     st.set_page_config(page_title = 'Sentiment Analysis') 
     
+    # Set initial training flag to False, ie has not been executed 
+    if 'training_flag' not in st.session_state:
+        st.session_state['training_flag'] = False
+    
     # Title
     st.title('Sentiment Analysis - Restaurant Reviews')
     st.write('Piers Walker 2022. https://github.com/pierswalker71')
@@ -76,6 +80,30 @@ def main():
                 binary_values.append(1)
         return binary_values
     #==============================================================================
+    
+    # Select model 
+    with st.sidebar:
+        st.header('Select model') 
+        model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
+
+    if model_type == 'Logistic Regression':
+        classifier = LogisticRegression()      
+    elif model_type == 'Naive Bayes':
+        classifier = MultinomialNB(alpha=0.1)
+    elif model_type == 'Bernoulli Naive Bayes':
+        classifier = BernoulliNB(alpha=0.1)                
+    elif model_type == 'Neural Network':
+        input_dim = X.shape[1]
+        classifier = Sequential()
+        classifier.add(Dense(2000, input_dim=input_dim))
+        classifier.add(Dropout(0.5))
+        classifier.add(Dense(2000))
+        classifier.add(Dropout(0.5))
+        classifier.add(Dense(1, activation="sigmoid"))
+        classifier.compile(loss='binary_crossentropy', metrics='accuracy')   
+    
+    
+    #if st.session_state['training_flag'] == False:
     # Load data
     st.header('Training data')
     input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
@@ -100,27 +128,10 @@ def main():
     #==============================================================================
     # Train classifier
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+        
+        
 
-    # Select model 
-    with st.sidebar:
-        st.header('Select model') 
-        model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
-
-    if model_type == 'Logistic Regression':
-        classifier = LogisticRegression()      
-    elif model_type == 'Naive Bayes':
-        classifier = MultinomialNB(alpha=0.1)
-    elif model_type == 'Bernoulli Naive Bayes':
-        classifier = BernoulliNB(alpha=0.1)                
-    elif model_type == 'Neural Network':
-        input_dim = X.shape[1]
-        classifier = Sequential()
-        classifier.add(Dense(2000, input_dim=input_dim))
-        classifier.add(Dropout(0.5))
-        classifier.add(Dense(2000))
-        classifier.add(Dropout(0.5))
-        classifier.add(Dense(1, activation="sigmoid"))
-        classifier.compile(loss='binary_crossentropy', metrics='accuracy')                 
+              
 
     # Make prediction
     if model_type == 'Neural Network': # Keras neural network        
@@ -151,12 +162,15 @@ def main():
         st.write(f'roc auc score: {round(auc*100,2)}')
         st.write(f'f1 score: {round(f1*100,2)}')         
     
+    
+    
     #==============================================================================
     # Retrain classifier on whole dataset
     if model_type == 'Neural Network':
         pass
     else:
-        classifier.fit(X, y)  
+        classifier.fit(X, y)     
+    
     #==============================================================================
     # Make prediction using user entered review text
     
