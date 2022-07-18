@@ -82,8 +82,8 @@ def main():
 
     with st.expander('Review data'):
         st.dataframe(input_data)
-        pos = len(input_data[input_data['Liked']==1].index
-        neg = len(input_data[input_data['Liked']==0].index
+        pos = len(input_data[input_data['Liked']==1].index)
+        neg = len(input_data[input_data['Liked']==0].index)
         st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg))}')
         st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg))}')
                                                  
