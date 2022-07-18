@@ -156,7 +156,7 @@ def main():
     new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
-    st.write('key word components in your review')
+    st.write('key word components in your review:')
     st.text(text_spacy[0])
                  
     # Retrain classifier on whole dataset
@@ -180,8 +180,10 @@ def main():
                 binary_values.append(1)
         prediction = binary_values
     
-    st.write('Here is my prediction')
-    st.write(prediction)
+    if prediction == 1:
+        st.write('I think this is a postive review comment')
+    else:
+        st.write('I think this is a negative review comment')
     
     
     
