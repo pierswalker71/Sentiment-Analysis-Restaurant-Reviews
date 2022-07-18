@@ -44,6 +44,7 @@ def main():
     st.write('The classification model then learns which groups of words correspond to either positive or negative sentiment.')
     st.write('Once trained, the model is capable of making predictions on brand new review text.')
     st.write('Try it out yourself by providing your own culinary review.')
+    st.write('Note: different machine learning models may be selected from the side bar. Their training performance wil be presented underneith')
 
 
     #==============================================================================
@@ -75,7 +76,6 @@ def main():
                 binary_values.append(1)
         return binary_values
     #==============================================================================
-    
     # Load data
     st.header('Load data')
     input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
@@ -86,7 +86,9 @@ def main():
         neg = len(input_data[input_data['Liked']==0].index)
         st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg),2)}%)')
         st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg),2)}%)')
-                                                 
+        
+    #==============================================================================    
+    # Process text data
     # Create corpus of review text, removing stop words and other characters
     text_list = input_data['Review']
     corpus = lemmatization(text_list, en, stopwords)
@@ -94,7 +96,8 @@ def main():
     countvector = CountVectorizer()
     X = countvector.fit_transform(corpus).toarray()
     y = input_data['Liked'].values
-
+    
+    #==============================================================================
     # Train classifier
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
@@ -129,9 +132,8 @@ def main():
         classifier.fit(X_train, y_train)
         y_pred = classifier.predict(X_test)     
 
-
     #==============================================================================
-    
+    # Assess training results
     confusion_matrix = confusion_matrix(y_test, y_pred)
     
     acc = accuracy_score(y_test, y_pred)
@@ -148,27 +150,17 @@ def main():
         st.write(f'recall: {round(recall*100,2)} %')      
           
         st.write(f'roc auc score: {round(auc*100,2)}')
-        st.write(f'f1 score: {round(f1*100,2)}')       
-      
+        st.write(f'f1 score: {round(f1*100,2)}')         
     
     #==============================================================================
+    # Make prediction using user entered review text
+    
     st.header('Predictions')
     new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
-    st.write(f'key word components found in your review: {text_spacy[0]}')
-    #st.text(text_spacy[0])
-    
-    #html_str = f"""
-    #<style>
-    #p.a {{
-    #  font: bold {font_size}px Courier;
-    #}}
-    #</style>
-    #<p class="a">{text_spacy[0]}</p>
-    #"""
-    #st.markdown(html_str, unsafe_allow_html=True)
-                 
+    st.write(f'key word components found in your review: [{text_spacy[0]}]')  
+           
     # Retrain classifier on whole dataset
     if model_type == 'Neural Network':
         pass
@@ -177,7 +169,6 @@ def main():
 
     # Make prediction
     prediction = classifier.predict(countvector.transform(text_spacy))
-   
 
     if model_type == 'Neural Network':
         continuous_values = prediction
@@ -196,14 +187,7 @@ def main():
     else:
         st.markdown('**I think this is a negative review comment**')
     
-    
-    
-    
-    
-    
-    
-    
-    
+
 
 if __name__ == '__main__':
     main()
