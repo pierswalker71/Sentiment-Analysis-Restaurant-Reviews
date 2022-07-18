@@ -18,13 +18,6 @@ def main():
     from sklearn.naive_bayes import MultinomialNB
     from sklearn.naive_bayes import BernoulliNB
     from sklearn.linear_model import LogisticRegression
-    
-    from sklearn.svm import SVC
-
-    #from sklearn.ensemble import RandomForestClassifier
-
-
-    #from sklearn.neural_network import MLPClassifier
 
     from keras.models import Sequential
     from keras.layers import Dense,Dropout
@@ -89,9 +82,11 @@ def main():
 
     with st.expander('Review data'):
         st.dataframe(input_data)
-    
-
-    
+        pos = len(input_data[input_data['Liked']==1].index
+        neg = len(input_data[input_data['Liked']==0].index
+        st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg))}')
+        st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg))}')
+                                                 
     # Create corpus of review text, removing stop words and other characters
     text_list = input_data['Review']
     corpus = lemmatization(text_list, en, stopwords)
@@ -99,27 +94,14 @@ def main():
     countvector = CountVectorizer()
     X = countvector.fit_transform(corpus).toarray()
     y = input_data['Liked'].values
-    
-    #countvector.get_feature_names_out()
-    
-     
+
     # Train classifier
-    
-    
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
     # select model 
     with st.sidebar:
         st.header('Select model') 
         model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
-    #model_type = 'keras'
-    #model_type = 'MultinomialNB'
-    #classifier = LogisticRegression()
-    #classifier = MultinomialNB(alpha=0.1)
-    #classifier = BernoulliNB(alpha=0.1)  
-    #classifier = SVC() #kernel='linear
-    #classifier = MLPClassifier()
-    #classifier = RandomForestClassifier()
 
     if model_type == 'Logistic Regression':
         classifier = LogisticRegression()      
@@ -130,7 +112,6 @@ def main():
     elif model_type == 'Neural Network':
         input_dim = X.shape[1]
         classifier = Sequential()
-    
         classifier.add(Dense(2000, input_dim=input_dim))
         classifier.add(Dropout(0.5))
         classifier.add(Dense(2000))
