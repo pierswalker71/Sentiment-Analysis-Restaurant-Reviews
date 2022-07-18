@@ -108,8 +108,9 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
     # select model 
+    st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'] 
     #model_type = 'keras'
-    model_type = 'MultinomialNB'
+    #model_type = 'MultinomialNB'
     #classifier = LogisticRegression()
     #classifier = MultinomialNB(alpha=0.1)
     #classifier = BernoulliNB(alpha=0.1)  
@@ -117,7 +118,13 @@ def main():
     #classifier = MLPClassifier()
     #classifier = RandomForestClassifier()
 
-    if model_type == 'keras':
+    if model_type == 'Logistic Regression':
+        classifier = LogisticRegression()      
+    elif model_type == 'Naive Bayes':
+        classifier = MultinomialNB(alpha=0.1)
+    elif model_type == 'Bernoulli Naive Bayes':
+        classifier = BernoulliNB(alpha=0.1)                
+    elif model_type == 'Neural Network':
         input_dim = X.shape[1]
         classifier = Sequential()
     
@@ -126,27 +133,20 @@ def main():
         classifier.add(Dense(2000))
         classifier.add(Dropout(0.5))
         classifier.add(Dense(1, activation="sigmoid"))
-        classifier.compile(loss='binary_crossentropy', metrics='accuracy')
-   
-    elif model_type == 'MultinomialNB':
-        classifier = MultinomialNB(alpha=0.1)
+        classifier.compile(loss='binary_crossentropy', metrics='accuracy')                 
 
     # Make prediction
-    if model_type == 'keras': # Keras neural network        
+    if model_type == 'Neural Network': # Keras neural network        
         classifier.fit(X_train, y_train, epochs=20,)    
         continuous_values = classifier.predict(X_test)
         y_pred = threshold_to_binary(continuous_values)
-
-    else: #model_type == 'sklearn'
+    else:
+        # Make prediction
         classifier.fit(X_train, y_train)
         y_pred = classifier.predict(X_test)     
 
 
-
- #def 
-
-    
-
+    #==============================================================================
     st.header('Model performance')
     confusion_matrix = confusion_matrix(y_test, y_pred)
     
@@ -165,23 +165,26 @@ def main():
     st.write(f'roc auc score: {round(auc*100,2)}')
     st.write(f'f1 score: {round(f1*100,2)}')       
       
-          
-   
-          
-
+    
+    #==============================================================================
     st.header('Predictions')
-    #st.write('Provide a new restaurant review for the model to analyse.')   #new_comments = ['I liked the soup','I hate waiting in this restaurant','Loved the beef','staff were great']
     new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
     st.write('key word components in your review')
     st.write(text_spacy)
+                 
+    # Retrain classifier on whole dataset
+    if model_type == 'Neural Network':
+        pass()
+    else:
+        classifier.fit(X, y)                 
 
     # Make prediction
     prediction = classifier.predict(countvector.transform(text_spacy))
    
 
-    if model_type == 'keras':
+    if model_type == 'Neural Network':
         continuous_values = prediction
         # Convert to binary
         binary_values = []
