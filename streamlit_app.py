@@ -108,7 +108,7 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
     # select model 
-    st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'] 
+    model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'] 
     #model_type = 'keras'
     #model_type = 'MultinomialNB'
     #classifier = LogisticRegression()
