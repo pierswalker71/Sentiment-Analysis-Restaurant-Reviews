@@ -156,7 +156,7 @@ def main():
     new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
-    st.write('key word components found in your review: ',text_spacy[0])
+    st.write('key word components found in your review:')
     #st.text(text_spacy[0])
     
     html_str = f"""
@@ -167,6 +167,7 @@ def main():
     </style>
     <p class="a">{text_spacy[0]}</p>
     """
+    st.markdown(html_str, unsafe_allow_html=True)
                  
     # Retrain classifier on whole dataset
     if model_type == 'Neural Network':
@@ -188,7 +189,8 @@ def main():
             else:
                 binary_values.append(1)
         prediction = binary_values
-    
+        
+    st.write('My prediction:')
     if prediction == 1:
         st.markdown('**I think this is a positive review comment**')
     else:
