@@ -181,9 +181,9 @@ def main():
         prediction = binary_values
     
     if prediction == 1:
-        st.write('I think this is a postive review comment')
+        st.markdown('**I think this is a positive review comment**')
     else:
-        st.write('I think this is a negative review comment')
+        st.markdown('**I think this is a negative review comment**')
     
     
     
