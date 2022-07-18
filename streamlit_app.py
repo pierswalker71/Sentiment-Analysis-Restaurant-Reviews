@@ -77,7 +77,7 @@ def main():
         return binary_values
     #==============================================================================
     # Load data
-    st.header('Load data')
+    st.header('Training data')
     input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
 
     with st.expander('Review data'):
@@ -155,7 +155,7 @@ def main():
     #==============================================================================
     # Make prediction using user entered review text
     
-    st.header('Predictions')
+    st.header('New restuarant review')
     new_comments = st.text_input(label='Provide a new restaurant review for the model to analyse.', value='I liked the soup')
     text_spacy = lemmatization(new_comments, en, stopwords)
     
