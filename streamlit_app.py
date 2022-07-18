@@ -84,10 +84,10 @@ def main():
     #==============================================================================
     
     # Load data
-    st.header('Load review data')
+    st.header('Load data')
     input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
 
-    with st.expander('Current data'):
+    with st.expander('Review data'):
         st.dataframe(input_data)
     
 
@@ -104,12 +104,13 @@ def main():
     
      
     # Train classifier
-    st.header('Select and train model') 
+    
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
     # select model 
     with st.sidebar:
+        st.header('Select model') 
         model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
     #model_type = 'keras'
     #model_type = 'MultinomialNB'
@@ -149,7 +150,7 @@ def main():
 
 
     #==============================================================================
-    st.header('Model performance')
+    
     confusion_matrix = confusion_matrix(y_test, y_pred)
     
     acc = accuracy_score(y_test, y_pred)
@@ -157,15 +158,16 @@ def main():
     recall = recall_score(y_test, y_pred)
     auc = roc_auc_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred)
-    
-    st.write('confusion_matrix')
-    st.write(confusion_matrix)
-    st.write(f'accuracy: {round(acc*100,2)} %')
-    st.write(f'precision: {round(prec*100,2)} %')
-    st.write(f'recall: {round(recall*100,2)} %')      
+    with st.sidebar:
+        st.header('Model training performance')
+        st.write('confusion_matrix')
+        st.write(confusion_matrix)
+        st.write(f'accuracy: {round(acc*100,2)} %')
+        st.write(f'precision: {round(prec*100,2)} %')
+        st.write(f'recall: {round(recall*100,2)} %')      
           
-    st.write(f'roc auc score: {round(auc*100,2)}')
-    st.write(f'f1 score: {round(f1*100,2)}')       
+        st.write(f'roc auc score: {round(auc*100,2)}')
+        st.write(f'f1 score: {round(f1*100,2)}')       
       
     
     #==============================================================================
