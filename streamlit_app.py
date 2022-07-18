@@ -181,6 +181,7 @@ def main():
                 binary_values.append(1)
         prediction = binary_values
         
+    st.header('Evaluation')     
     st.write('My prediction:')
     if prediction == 1:
         st.markdown('**I think this is a positive review comment**')
