@@ -83,7 +83,7 @@ def main():
                 binary_values.append(1)
         return binary_values
     #-----------------------------------------------------------------------------    
-    @st.cache  
+    @st.cache(allow_output_mutation=True) # It is run twice for training an operational  
     def build_classifier(model_type='Logistic Regression', keras_input_dimensions=1000):
         # Returns a classified based on the desired type
         # Input: model_type(str): Selects model. One of 'Logistic Regression', 'Bernoulli Naive Bayes', 'Neural Network'
@@ -152,17 +152,17 @@ def main():
         model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
         
     #==============================================================================    
-    if st.session_state['model_type'] != model_type:
-        # Build training model of selected type
-        classifier_training = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
+    #if st.session_state['model_type'] != model_type:
+    # Build training model of selected type
+    classifier_training = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
 
-        if model_type == 'Neural Network': # Keras neural network        
-            classifier_training.fit(X_train, y_train, epochs=20,)    
-            continuous_values = classifier_training.predict(X_test)
-            y_pred = threshold_to_binary(continuous_values)
-        else:
-            classifier_training.fit(X_train, y_train)
-            y_pred = classifier_training.predict(X_test)     
+    if model_type == 'Neural Network': # Keras neural network        
+        classifier_training.fit(X_train, y_train, epochs=20,)    
+        continuous_values = classifier_training.predict(X_test)
+        y_pred = threshold_to_binary(continuous_values)
+    else:
+        classifier_training.fit(X_train, y_train)
+        y_pred = classifier_training.predict(X_test)     
 
     #-----------------------------------------------------------------------------
     # Assess training results
