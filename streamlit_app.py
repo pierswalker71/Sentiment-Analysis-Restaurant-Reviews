@@ -216,7 +216,9 @@ def main():
     st.header('Evaluation')    
     st.write(f'key word components found in your review: [{text_spacy[0]}]') 
     st.write('\nMy prediction:')
-    if prediction == 1:
+    st.write(continuous_values)
+    st.write(binary_values)
+    if prediction >0.99:
         st.markdown('**I think this is a positive review comment**')
     else:
         st.markdown('**I think this is a negative review comment**')
