@@ -113,7 +113,7 @@ def main():
             classifier.fit(X, y, epochs=20,)    
         else:
             classifier.fit(X, y)   
-        return classified
+        return classifier
     
     #==============================================================================
 
