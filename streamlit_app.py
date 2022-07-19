@@ -111,7 +111,7 @@ def main():
             classifier.compile(loss='binary_crossentropy', metrics='accuracy')   
         return classifier   
     
-    @st.cache    
+ 
     def fit_classifier(classifier,X,y,epochs=20):   
         if model_type == 'Neural Network':
             classifier.fit(X, y, epochs=20,)    
