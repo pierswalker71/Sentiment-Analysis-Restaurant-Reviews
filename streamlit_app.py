@@ -35,9 +35,11 @@ def main():
     # Settings
     st.set_page_config(page_title = 'Sentiment Analysis') 
     
-    # Set initial training flag to False, ie has not been executed 
+    # Set initial training flag to False and blank model type. These are used to execute model training only once
     if 'training_flag' not in st.session_state:
         st.session_state['training_flag'] = False
+    if 'model_type' not in st.session_state:
+        st.session_state['model_type'] = ''
     
     # Title
     st.title('Sentiment Analysis - Restaurant Reviews')
@@ -106,29 +108,31 @@ def main():
     
     #==============================================================================
 
-    #if st.session_state['training_flag'] == False:
-    # Load data
-    st.header('Training data')
-    input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
+    if st.session_state['training_flag'] == False:
+        # Load data
+        st.header('Training data')
+        input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
 
-    with st.expander('Review data'):
-        st.dataframe(input_data)
-        pos = len(input_data[input_data['Liked']==1].index)
-        neg = len(input_data[input_data['Liked']==0].index)
-        st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg),2)}%)')
-        st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg),2)}%)')
- 
-    # Process text data
-    # Create corpus of review text, removing stop words and other characters
-    text_list = input_data['Review']
-    corpus = lemmatization(text_list, en, stopwords)
+        with st.expander('Review data'):
+            st.dataframe(input_data)
+            pos = len(input_data[input_data['Liked']==1].index)
+            neg = len(input_data[input_data['Liked']==0].index)
+            st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg),2)}%)')
+            st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg),2)}%)')
+     
+        # Process text data
+        # Create corpus of review text, removing stop words and other characters
+        text_list = input_data['Review']
+        corpus = lemmatization(text_list, en, stopwords)
     
-    countvector = CountVectorizer()
-    X = countvector.fit_transform(corpus).toarray()
-    y = input_data['Liked'].values
+        countvector = CountVectorizer()
+        X = countvector.fit_transform(corpus).toarray()
+        y = input_data['Liked'].values
     
-    # Train classifier and make predictions
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+        # Train test split the data
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+        
+        st.session_state['training_flag'] = True
     
     #==============================================================================
     # User selection of model type model 
