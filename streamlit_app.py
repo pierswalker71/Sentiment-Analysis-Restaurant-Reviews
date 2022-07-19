@@ -35,9 +35,9 @@ def main():
     # Settings
     st.set_page_config(page_title = 'Sentiment Analysis') 
     
-    # Set initial training flag to False and blank model type. These are used to execute model training only once
-    if 'training_flag' not in st.session_state:
-        st.session_state['training_flag'] = False
+    # Set load data flag and blank model type. These are used to execute data load and model training a minimal number of times
+    if 'data_loaded' not in st.session_state:
+        st.session_state['data_loaded'] = False
     if 'model_type' not in st.session_state:
         st.session_state['model_type'] = ''
     
@@ -108,7 +108,7 @@ def main():
     
     #==============================================================================
 
-    if st.session_state['training_flag'] == False:
+    if st.session_state['data_loaded'] == False:
         # Load data
         st.header('Training data')
         input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
@@ -139,39 +139,42 @@ def main():
     with st.sidebar:
         st.header('Select model') 
         model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
-    
-    # Build training model of selected type
-    classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
+        
+    #==============================================================================    
+    if st.session_state['model_type'] != model_type:
+        # Build training model of selected type
+        classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
 
-    if model_type == 'Neural Network': # Keras neural network        
-        classifier.fit(X_train, y_train, epochs=20,)    
-        continuous_values = classifier.predict(X_test)
-        y_pred = threshold_to_binary(continuous_values)
-    else:
-        classifier.fit(X_train, y_train)
-        y_pred = classifier.predict(X_test)     
+        if model_type == 'Neural Network': # Keras neural network        
+            classifier.fit(X_train, y_train, epochs=20,)    
+            continuous_values = classifier.predict(X_test)
+            y_pred = threshold_to_binary(continuous_values)
+        else:
+            classifier.fit(X_train, y_train)
+            y_pred = classifier.predict(X_test)     
 
-    #==============================================================================
-    # Assess training results
-    confusion_matrix = confusion_matrix(y_test, y_pred)
+        #-----------------------------------------------------------------------------
+        # Assess training results
+        confusion_matrix = confusion_matrix(y_test, y_pred)
     
-    acc = accuracy_score(y_test, y_pred)
-    prec = precision_score(y_test, y_pred)
-    recall = recall_score(y_test, y_pred)
-    auc = roc_auc_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred)
-    with st.sidebar:
-        st.header('Model training performance')
-        st.write('confusion_matrix')
-        st.write(confusion_matrix)
-        st.write(f'Accuracy: {round(acc*100,2)} %')
-        st.write(f'Precision: {round(prec*100,2)} %')
-        st.write(f'Recall: {round(recall*100,2)} %')      
+        acc = accuracy_score(y_test, y_pred)
+        prec = precision_score(y_test, y_pred)
+        recall = recall_score(y_test, y_pred)
+        auc = roc_auc_score(y_test, y_pred)
+        f1 = f1_score(y_test, y_pred)
+        with st.sidebar:
+            st.header('Model training performance')
+            st.write('confusion_matrix')
+            st.write(confusion_matrix)
+            st.write(f'Accuracy: {round(acc*100,2)} %')
+            st.write(f'Precision: {round(prec*100,2)} %')
+            st.write(f'Recall: {round(recall*100,2)} %')      
           
-        st.write(f'Roc auc score: {round(auc*100,2)}')
-        st.write(f'f1 score: {round(f1*100,2)}')         
-    
-    
+            st.write(f'Roc auc score: {round(auc*100,2)}')
+            st.write(f'f1 score: {round(f1*100,2)}')     
+        
+        # Update session state value with most recently trained model
+        st.session_state['model_type'] = model_type
     
     #==============================================================================
     # Retrain classifier on whole dataset
@@ -180,7 +183,7 @@ def main():
     else:
         classifier.fit(X, y)     
     
-    #==============================================================================
+    #-----------------------------------------------------------------------------
     # Make prediction using user entered review text
     
     st.header('Enter new restuarant review')
