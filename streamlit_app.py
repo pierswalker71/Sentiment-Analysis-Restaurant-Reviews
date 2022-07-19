@@ -9,7 +9,8 @@ def main():
     import re 
     
     import spacy
-    en = spacy.load("en_core_web_md")
+    en = spacy.load("en_core_web_sm")
+    #en = spacy.load("en_core_web_md")
     stopwords = en.Defaults.stop_words
 
     from sklearn.feature_extraction.text import CountVectorizer
