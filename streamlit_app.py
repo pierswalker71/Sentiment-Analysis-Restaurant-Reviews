@@ -105,15 +105,7 @@ def main():
         return classifier   
     
     #==============================================================================
-    
-    # User selection of model type model 
-    with st.sidebar:
-        st.header('Select model') 
-        model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
-        
-    # Build model of selected type
-    classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
-    
+
     #if st.session_state['training_flag'] == False:
     # Load data
     st.header('Training data')
@@ -125,8 +117,7 @@ def main():
         neg = len(input_data[input_data['Liked']==0].index)
         st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg),2)}%)')
         st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg),2)}%)')
-        
-    #==============================================================================    
+ 
     # Process text data
     # Create corpus of review text, removing stop words and other characters
     text_list = input_data['Review']
@@ -136,9 +127,17 @@ def main():
     X = countvector.fit_transform(corpus).toarray()
     y = input_data['Liked'].values
     
-    #==============================================================================
     # Train classifier and make predictions
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+    
+    #==============================================================================
+    # User selection of model type model 
+    with st.sidebar:
+        st.header('Select model') 
+        model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
+    
+    # Build training model of selected type
+    classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
 
     if model_type == 'Neural Network': # Keras neural network        
         classifier.fit(X_train, y_train, epochs=20,)    
