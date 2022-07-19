@@ -4,7 +4,7 @@ streamlit==1.11.0
 spacy==2.2.0 # For compatibility with en_core_web_sm and md
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.0/en_core_web_sm-2.2.0.tar.gz
 
-spacy==2.2.0 # For compatibility with en_core_web_md
+#spacy==2.2.0 # For compatibility with en_core_web_md
 #https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.2.0/en_core_web_md-2.2.0.tar.gz
 
 scikit-learn==1.1.1
