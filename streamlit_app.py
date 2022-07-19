@@ -61,8 +61,7 @@ def main():
     def load_csv(file_name, delimiter='\t'):
         df = pd.read_csv(file_name, delimiter=delimiter)
         return df
-        
-    @st.cache        
+                
     def lemmatization(text_list, en, stopwords):
         # Creates a corpus of text from a list of sentences
         
