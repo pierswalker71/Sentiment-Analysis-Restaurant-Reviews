@@ -79,29 +79,40 @@ def main():
             else:
                 binary_values.append(1)
         return binary_values
+    #-----------------------------------------------------------------------------    
+    
+    def build_classifier(model_type='Logistic Regression', keras_input_dimensions=1000):
+        # Returns a classified based on the desired type
+        # Input: model_type(str): Selects model. One of 'Logistic Regression', 'Bernoulli Naive Bayes', 'Neural Network'
+        # Input: keras_input_dimensions(int): Only required if model_type=='Neural Network'
+        
+        if model_type == 'Logistic Regression':
+            classifier = LogisticRegression()      
+        elif model_type == 'Naive Bayes':
+            classifier = MultinomialNB(alpha=0.1)
+        elif model_type == 'Bernoulli Naive Bayes':
+            classifier = BernoulliNB(alpha=0.1)                
+        elif model_type == 'Neural Network':
+            input_dim = keras_input_dimensions
+            classifier = Sequential()
+            classifier.add(Dense(2000, input_dim=input_dim))
+            classifier.add(Dropout(0.5))
+            classifier.add(Dense(2000))
+            classifier.add(Dropout(0.5))
+            classifier.add(Dense(1, activation="sigmoid"))
+            classifier.compile(loss='binary_crossentropy', metrics='accuracy')   
+            
+        return classifier   
+    
     #==============================================================================
     
-    # Select model 
+    # User selection of model type model 
     with st.sidebar:
         st.header('Select model') 
         model_type = st.selectbox('Select model type', ['Logistic Regression','Naive Bayes', 'Bernoulli Naive Bayes','Neural Network'])
-
-    if model_type == 'Logistic Regression':
-        classifier = LogisticRegression()      
-    elif model_type == 'Naive Bayes':
-        classifier = MultinomialNB(alpha=0.1)
-    elif model_type == 'Bernoulli Naive Bayes':
-        classifier = BernoulliNB(alpha=0.1)                
-    elif model_type == 'Neural Network':
-        input_dim = X.shape[1]
-        classifier = Sequential()
-        classifier.add(Dense(2000, input_dim=input_dim))
-        classifier.add(Dropout(0.5))
-        classifier.add(Dense(2000))
-        classifier.add(Dropout(0.5))
-        classifier.add(Dense(1, activation="sigmoid"))
-        classifier.compile(loss='binary_crossentropy', metrics='accuracy')   
-    
+        
+    # Build model of selected type
+    classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
     
     #if st.session_state['training_flag'] == False:
     # Load data
@@ -126,14 +137,9 @@ def main():
     y = input_data['Liked'].values
     
     #==============================================================================
-    # Train classifier
+    # Train classifier and make predictions
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
-        
-        
 
-              
-
-    # Make prediction
     if model_type == 'Neural Network': # Keras neural network        
         classifier.fit(X_train, y_train, epochs=20,)    
         continuous_values = classifier.predict(X_test)
@@ -167,7 +173,7 @@ def main():
     #==============================================================================
     # Retrain classifier on whole dataset
     if model_type == 'Neural Network':
-        pass
+        classifier.fit(X, y, epochs=20,)    
     else:
         classifier.fit(X, y)     
     
