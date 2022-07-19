@@ -178,7 +178,7 @@ def main():
     
     #==============================================================================
     # Rebuild classifier and train on whole dataset
-        classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
+    classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
     # Add any optimal hyperparameters here
     
     if model_type == 'Neural Network':
