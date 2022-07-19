@@ -202,23 +202,23 @@ def main():
     prediction = st.session_state['classifier'].predict(countvector.transform(text_spacy))
     
     # Convert continuous vaues to binary if required
-    if model_type == 'Neural Network':
-        continuous_values = prediction
+    #if model_type == 'Neural Network':
+    #    continuous_values = prediction
         
-        binary_values = []
-        for i in continuous_values:
-            if i[0] < 0.5:
-                binary_values.append(0)
-            else:
-                binary_values.append(1)
-        prediction = binary_values
+    #    binary_values = []
+    #    for i in continuous_values:
+    #        if i[0] < 0.5:
+    #            binary_values.append(0)
+    #        else:
+    #            binary_values.append(1)
+    #    prediction = binary_values
         
     st.header('Evaluation')    
     st.write(f'key word components found in your review: [{text_spacy[0]}]') 
     st.write('\nMy prediction:')
-    st.write(continuous_values)
-    st.write(binary_values)
-    if prediction >0.99:
+    #st.write(continuous_values)
+    #st.write(binary_values)
+    if prediction >0.5:
         st.markdown('**I think this is a positive review comment**')
     else:
         st.markdown('**I think this is a negative review comment**')
