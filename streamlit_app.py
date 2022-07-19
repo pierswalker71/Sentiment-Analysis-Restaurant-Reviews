@@ -41,8 +41,6 @@ def main():
         st.session_state['data_loaded'] = False
     if 'model_type' not in st.session_state:
         st.session_state['model_type'] = ''
-    if 'classifier' not in st.session_state:     
-        st.session_state['classifier'] = ''
     
     # Title
     st.title('Sentiment Analysis - Restaurant Reviews')
@@ -85,7 +83,7 @@ def main():
                 binary_values.append(1)
         return binary_values
     #-----------------------------------------------------------------------------    
-    
+    @st.cache  
     def build_classifier(model_type='Logistic Regression', keras_input_dimensions=1000):
         # Returns a classified based on the desired type
         # Input: model_type(str): Selects model. One of 'Logistic Regression', 'Bernoulli Naive Bayes', 'Neural Network'
@@ -108,6 +106,14 @@ def main():
             classifier.compile(loss='binary_crossentropy', metrics='accuracy')   
             
         return classifier   
+    
+    @st.cache    
+    def fit_classifier(classifier,X,y,epochs=20):   
+        if model_type == 'Neural Network':
+            classifier.fit(X, y, epochs=20,)    
+        else:
+            classifier.fit(X, y)   
+        return classified
     
     #==============================================================================
 
@@ -187,12 +193,9 @@ def main():
         classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
         # Add any optimal hyperparameters here
     
-        if model_type == 'Neural Network':
-            classifier.fit(X, y, epochs=20,)    
-        else:
-            classifier.fit(X, y)   
-        # Update session state value with most recently trained model 
-        st.session_state['classifier'] = classifier      
+        fit_classifier(classifier, X, y, model_type='Logistic Regression', epochs=20)
+        
+
     
     #-----------------------------------------------------------------------------
     # Make prediction using user entered review text
@@ -202,7 +205,7 @@ def main():
     text_spacy = lemmatization(new_comments, en, stopwords)
          
     # Make prediction
-    prediction = st.session_state['classifier'].predict(countvector.transform(text_spacy))
+    prediction = classifier.predict(countvector.transform(text_spacy))
         
     st.header('Evaluation')    
     st.write(f'key word components found in your review: [{text_spacy[0]}]') 
