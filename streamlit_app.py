@@ -193,7 +193,7 @@ def main():
         classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
         # Add any optimal hyperparameters here
     
-        fit_classifier(classifier, X, y, model_type='Logistic Regression', epochs=20)
+        classifier = fit_classifier(classifier, X, y, model_type='Logistic Regression', epochs=20)
         
 
     
