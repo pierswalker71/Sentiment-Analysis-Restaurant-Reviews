@@ -57,6 +57,11 @@ def main():
     #==============================================================================
     # Functions 
     
+    @st.cache 
+    def load_csv(file_name, delimiter='\t'):
+        data = pd.read_csv(file_name, delimiter=delimiter)
+        
+    @st.cache        
     def lemmatization(text_list, en, stopwords):
         # Creates a corpus of text from a list of sentences
         
@@ -104,7 +109,6 @@ def main():
             classifier.add(Dropout(0.5))
             classifier.add(Dense(1, activation="sigmoid"))
             classifier.compile(loss='binary_crossentropy', metrics='accuracy')   
-            
         return classifier   
     
     @st.cache    
@@ -117,33 +121,33 @@ def main():
     
     #==============================================================================
 
-    if st.session_state['data_loaded'] == False:
-        # Load data
-        st.header('Training data')
-        input_data = pd.read_csv('Restaurant_Reviews.tsv',delimiter='\t')
-
-        with st.expander('Review data'):
-            st.dataframe(input_data)
-            pos = len(input_data[input_data['Liked']==1].index)
-            neg = len(input_data[input_data['Liked']==0].index)
-            st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg),2)}%)')
-            st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg),2)}%)')
+    #if st.session_state['data_loaded'] == False:
+    # Load data
+    st.header('Training data')          
+    input_data = load_csv(filename='Restaurant_Reviews.tsv')
+        
+    with st.expander('Review data'):
+        st.dataframe(input_data)
+        pos = len(input_data[input_data['Liked']==1].index)
+        neg = len(input_data[input_data['Liked']==0].index)
+        st.write(f'Number of positive reviews = {pos} ({round(pos*100/(pos+neg),2)}%)')
+        st.write(f'Number of negative reviews = {neg} ({round(neg*100/(pos+neg),2)}%)')
      
-        # Process text data
-        # Create corpus of review text, removing stop words and other characters
-        text_list = input_data['Review']
-        corpus = lemmatization(text_list, en, stopwords)
+    # Process text data
+    # Create corpus of review text, removing stop words and other characters
+    text_list = input_data['Review']
+    corpus = lemmatization(text_list, en, stopwords)
     
-        # Convert the corpus of text items to a matrix of token counts (a bit like onehot encoding)
-        countvector = CountVectorizer()
-        X = countvector.fit_transform(corpus).toarray()
-        
-        y = input_data['Liked'].values
+    # Convert the corpus of text items to a matrix of token counts (a bit like onehot encoding)
+    countvector = CountVectorizer()
+    X = countvector.fit_transform(corpus).toarray()
+      
+    y = input_data['Liked'].values
     
-        # Train test split the data
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
+    # Train test split the data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
         
-        st.session_state['training_flag'] = True
+    st.session_state['data_loaded'] = True
     
     #==============================================================================
     # User selection of model type model 
@@ -185,15 +189,15 @@ def main():
         st.write(f'f1 score: {round(f1*100,2)}')     
         
     # Update session state value with most recently trained model type
-    st.session_state['model_type'] = model_type
+    #st.session_state['model_type'] = model_type
     
     #==============================================================================
-    if st.session_state['model_type'] != model_type:
-        # Rebuild classifier and train on whole dataset
-        classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
-        # Add any optimal hyperparameters here
+    #if st.session_state['model_type'] != model_type:
+    # Rebuild classifier and train on whole dataset
+    classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
+    # Add any optimal hyperparameters here
     
-        classifier = fit_classifier(classifier, X, y, model_type='Logistic Regression', epochs=20)
+    classifier = fit_classifier(classifier, X, y, model_type='Logistic Regression', epochs=20)
         
 
     
