@@ -59,7 +59,8 @@ def main():
     
     @st.cache 
     def load_csv(file_name, delimiter='\t'):
-        data = pd.read_csv(file_name, delimiter=delimiter)
+        df = pd.read_csv(file_name, delimiter=delimiter)
+        return df
         
     @st.cache        
     def lemmatization(text_list, en, stopwords):
