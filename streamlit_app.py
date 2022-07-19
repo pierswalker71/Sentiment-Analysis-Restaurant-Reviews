@@ -177,15 +177,15 @@ def main():
         # Update session state value with most recently trained model
         st.session_state['model_type'] = model_type
     
-    #==============================================================================
-    # Rebuild classifier and train on whole dataset
-    classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
-    # Add any optimal hyperparameters here
+        #==============================================================================
+        # Rebuild classifier and train on whole dataset
+        classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
+        # Add any optimal hyperparameters here
     
-    if model_type == 'Neural Network':
-        classifier.fit(X, y, epochs=20,)    
-    else:
-        classifier.fit(X, y)     
+        if model_type == 'Neural Network':
+            classifier.fit(X, y, epochs=20,)    
+        else:
+            classifier.fit(X, y)     
     
     #-----------------------------------------------------------------------------
     # Make prediction using user entered review text
