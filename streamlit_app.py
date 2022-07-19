@@ -41,6 +41,8 @@ def main():
         st.session_state['data_loaded'] = False
     if 'model_type' not in st.session_state:
         st.session_state['model_type'] = ''
+    if 'classifier' not in st.session_state:     
+        st.session_state['classifier'] = ''
     
     # Title
     st.title('Sentiment Analysis - Restaurant Reviews')
@@ -174,7 +176,7 @@ def main():
             st.write(f'Roc auc score: {round(auc*100,2)}')
             st.write(f'f1 score: {round(f1*100,2)}')     
         
-        # Update session state value with most recently trained model
+        # Update session state value with most recently trained model type
         st.session_state['model_type'] = model_type
     
         #==============================================================================
@@ -185,7 +187,9 @@ def main():
         if model_type == 'Neural Network':
             classifier.fit(X, y, epochs=20,)    
         else:
-            classifier.fit(X, y)     
+            classifier.fit(X, y)   
+        # Update session state value with most recently trained model 
+        st.session_state['classifier'] = classifier      
     
     #-----------------------------------------------------------------------------
     # Make prediction using user entered review text
@@ -195,7 +199,7 @@ def main():
     text_spacy = lemmatization(new_comments, en, stopwords)
          
     # Make prediction
-    prediction = classifier.predict(countvector.transform(text_spacy))
+    prediction = st.session_state['classifier'].predict(countvector.transform(text_spacy))
     
     # Convert continuous vaues to binary if required
     if model_type == 'Neural Network':
