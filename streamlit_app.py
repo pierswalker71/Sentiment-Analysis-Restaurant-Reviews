@@ -124,7 +124,7 @@ def main():
     #if st.session_state['data_loaded'] == False:
     # Load data
     st.header('Training data')          
-    input_data = load_csv(filename='Restaurant_Reviews.tsv')
+    input_data = load_csv(file_name='Restaurant_Reviews.tsv')
         
     with st.expander('Review data'):
         st.dataframe(input_data)
