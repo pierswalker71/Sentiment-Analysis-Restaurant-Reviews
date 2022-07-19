@@ -143,15 +143,15 @@ def main():
     #==============================================================================    
     if st.session_state['model_type'] != model_type:
         # Build training model of selected type
-        classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
+        classifier_training = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
 
         if model_type == 'Neural Network': # Keras neural network        
-            classifier.fit(X_train, y_train, epochs=20,)    
-            continuous_values = classifier.predict(X_test)
+            classifier_training.fit(X_train, y_train, epochs=20,)    
+            continuous_values = classifier_training.predict(X_test)
             y_pred = threshold_to_binary(continuous_values)
         else:
-            classifier.fit(X_train, y_train)
-            y_pred = classifier.predict(X_test)     
+            classifier_training.fit(X_train, y_train)
+            y_pred = classifier_training.predict(X_test)     
 
         #-----------------------------------------------------------------------------
         # Assess training results
@@ -177,7 +177,10 @@ def main():
         st.session_state['model_type'] = model_type
     
     #==============================================================================
-    # Retrain classifier on whole dataset
+    # Rebuild classifier and train on whole dataset
+        classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
+    # Add any optimal hyperparameters here
+    
     if model_type == 'Neural Network':
         classifier.fit(X, y, epochs=20,)    
     else:
