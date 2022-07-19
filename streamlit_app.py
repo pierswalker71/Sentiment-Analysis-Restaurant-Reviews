@@ -128,8 +128,10 @@ def main():
         text_list = input_data['Review']
         corpus = lemmatization(text_list, en, stopwords)
     
+        # Convert the corpus of text items to a matrix of token counts (a bit like onehot encoding)
         countvector = CountVectorizer()
         X = countvector.fit_transform(corpus).toarray()
+        
         y = input_data['Liked'].values
     
         # Train test split the data
@@ -156,30 +158,31 @@ def main():
             classifier_training.fit(X_train, y_train)
             y_pred = classifier_training.predict(X_test)     
 
-        #-----------------------------------------------------------------------------
-        # Assess training results
-        confusion_matrix = confusion_matrix(y_test, y_pred)
+    #-----------------------------------------------------------------------------
+    # Assess training results
+    confusion_matrix = confusion_matrix(y_test, y_pred)
     
-        acc = accuracy_score(y_test, y_pred)
-        prec = precision_score(y_test, y_pred)
-        recall = recall_score(y_test, y_pred)
-        auc = roc_auc_score(y_test, y_pred)
-        f1 = f1_score(y_test, y_pred)
-        with st.sidebar:
-            st.header('Model training performance')
-            st.write('confusion_matrix')
-            st.write(confusion_matrix)
-            st.write(f'Accuracy: {round(acc*100,2)} %')
-            st.write(f'Precision: {round(prec*100,2)} %')
-            st.write(f'Recall: {round(recall*100,2)} %')      
-          
-            st.write(f'Roc auc score: {round(auc*100,2)}')
-            st.write(f'f1 score: {round(f1*100,2)}')     
+    acc = accuracy_score(y_test, y_pred)
+    prec = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    auc = roc_auc_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    with st.sidebar:
+        st.header('Model training performance')
+        st.write('confusion_matrix')
+        st.write(confusion_matrix)
+        st.write(f'Accuracy: {round(acc*100,2)} %')
+        st.write(f'Precision: {round(prec*100,2)} %')
+        st.write(f'Recall: {round(recall*100,2)} %')      
+      
+        st.write(f'Roc auc score: {round(auc*100,2)}')
+        st.write(f'f1 score: {round(f1*100,2)}')     
         
-        # Update session state value with most recently trained model type
-        st.session_state['model_type'] = model_type
+    # Update session state value with most recently trained model type
+    st.session_state['model_type'] = model_type
     
-        #==============================================================================
+    #==============================================================================
+    if st.session_state['model_type'] != model_type:
         # Rebuild classifier and train on whole dataset
         classifier = build_classifier(model_type=model_type, keras_input_dimensions=X.shape[1])
         # Add any optimal hyperparameters here
@@ -200,24 +203,10 @@ def main():
          
     # Make prediction
     prediction = st.session_state['classifier'].predict(countvector.transform(text_spacy))
-    
-    # Convert continuous vaues to binary if required
-    #if model_type == 'Neural Network':
-    #    continuous_values = prediction
-        
-    #    binary_values = []
-    #    for i in continuous_values:
-    #        if i[0] < 0.5:
-    #            binary_values.append(0)
-    #        else:
-    #            binary_values.append(1)
-    #    prediction = binary_values
         
     st.header('Evaluation')    
     st.write(f'key word components found in your review: [{text_spacy[0]}]') 
     st.write('\nMy prediction:')
-    #st.write(continuous_values)
-    #st.write(binary_values)
     if prediction >0.5:
         st.markdown('**I think this is a positive review comment**')
     else:
