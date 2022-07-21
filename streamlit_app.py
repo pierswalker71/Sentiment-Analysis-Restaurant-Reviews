@@ -47,7 +47,7 @@ def main():
     st.write('This tool is capable of establishing whether restaurant reviews are positive or negative.')
     st.write('It does this by training a machine learning model on an open [data](https://www.kaggle.com/datasets/d4rklucif3r/restaurant-reviews) source with prelabled reviews.')
     st.write('The machine learning model first extracts the key components of each review text, dropping irrelevant words, and simplifying each word to its root meaning.\
-              The classification model then learns which groups of words correspond to either positive or negative sentiment.')
+              The model then learns to classify which groups of words correspond to either positive or negative sentiment.')
     st.write('Once trained, the model is capable of making predictions on brand new review text.')
     st.write('Try it out yourself by providing your own culinary review.')
 
