@@ -45,7 +45,7 @@ def main():
     st.title('Sentiment Analysis - Restaurant Reviews')
     st.write('Piers Walker 2022. https://github.com/pierswalker71')
     st.write('This tool is capable of establishing whether restaurant reviews are positive or negative.')
-    st.write('It does this by training a machine learning model on an open [data]((https://www.kaggle.com/datasets/d4rklucif3r/restaurant-reviews) source with prelabled reviews.', unsafe_allow_html=Tru)
+    st.write('It does this by training a machine learning model on an open [data](https://www.kaggle.com/datasets/d4rklucif3r/restaurant-reviews) source with prelabled reviews.', unsafe_allow_html=Tru)
     st.write('The machine learning model first extracts the key components of each review text, dropping irrelevant words, and simplifying each word to its root meaning.\
               The classification model then learns which groups of words correspond to either positive or negative sentiment.')
     st.write('Once trained, the model is capable of making predictions on brand new review text.')
