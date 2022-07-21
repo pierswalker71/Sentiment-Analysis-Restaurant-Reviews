@@ -51,7 +51,9 @@ def main():
     st.write('Once trained, the model is capable of making predictions on brand new review text.')
     st.write('Try it out yourself by providing your own culinary review.')
     st.write('Note: Different machine learning models may be selected from the side bar. Their training performance is presented underneath.')
-
+    st.write('Comments: The models have not undergone any hyperparameter optimisation to improve their performance, \
+              but they work pretty well due to the underlying lagnuage model provided by the Spacy library. \
+              The neural network model takes a longer time to train and run.')
 
     #==============================================================================
     # Functions 
