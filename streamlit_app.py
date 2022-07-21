@@ -46,12 +46,12 @@ def main():
     st.write('Piers Walker 2022. https://github.com/pierswalker71')
     st.write('This tool is capable of establishing whether restaurant reviews are positive or negative.')
     st.write('It does this by training a machine learning model on an open data source with prelabled reviews (https://www.kaggle.com/datasets/d4rklucif3r/restaurant-reviews).')
-    st.write('The machine learning model first extracts the key components of each review text, dropping irrelevant words, and simplifying each word to its root meaning.')
-    st.write('The classification model then learns which groups of words correspond to either positive or negative sentiment.')
+    st.write('The machine learning model first extracts the key components of each review text, dropping irrelevant words, and simplifying each word to its root meaning.\
+              The classification model then learns which groups of words correspond to either positive or negative sentiment.')
     st.write('Once trained, the model is capable of making predictions on brand new review text.')
     st.write('Try it out yourself by providing your own culinary review.')
-    st.write('Note: Different machine learning models may be selected from the side bar (the neural network model takes a little longer to run).')
-    st.write('Their training performance is presented underneath.')
+    st.write('Note: Different machine learning models may be selected from the side bar (the neural network model takes a little longer to run. \
+              Their training performance is presented underneath.')
 
     #==============================================================================
     # Functions 
