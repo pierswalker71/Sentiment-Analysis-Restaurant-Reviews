@@ -1,11 +1,19 @@
 streamlit==1.22.0
 
 
-spacy==3.5.2
-https://files.pythonhosted.org/packages/7f/17/46f037b3d49844e4cd529f8d24e3873d52befeab1533899f183290b8b6d1/spacy-3.5.2.tar.gz
+
+
+spacy>=3.0.0,<4.0.0
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz
 
 
 # previous attempts at ensuring compatibility
+
+# spacy loaded but couldnt find sm model
+#spacy==3.5.2
+#https://files.pythonhosted.org/packages/7f/17/46f037b3d49844e4cd529f8d24e3873d52befeab1533899f183290b8b6d1/spacy-3.5.2.tar.gz
+
+
 
 # loads but ModuleNotFoundError: No module named 'altair.vegalite.v4'
 #spacy==3.0.0
