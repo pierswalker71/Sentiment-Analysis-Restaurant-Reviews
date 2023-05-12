@@ -1,7 +1,11 @@
 streamlit==1.11.0
 
-spacy==2.3.9
-https://files.pythonhosted.org/packages/d5/3f/67f3deaa10ca9e6ff78677116a415a51109472a9e0d893d024439cc465b7/spacy-2.3.9.tar.gz
+
+spacy==3.0.0
+https://files.pythonhosted.org/packages/ff/49/990573a86db7f8db115a9f32c2ecc904eea2cafd680866b2722de0d41100/spacy-3.0.0.tar.gz
+
+#spacy==2.3.9
+#https://files.pythonhosted.org/packages/d5/3f/67f3deaa10ca9e6ff78677116a415a51109472a9e0d893d024439cc465b7/spacy-2.3.9.tar.gz
 
 # previous attempts at ensuring compatibility
 #spacy>=2.2.0,<3.0.0 # For compatibility with en_core_web_sm 
