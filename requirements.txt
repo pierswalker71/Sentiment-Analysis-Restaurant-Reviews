@@ -1,7 +1,11 @@
 streamlit==1.11.0
 
+spacy==2.3.9
+https://files.pythonhosted.org/packages/d5/3f/67f3deaa10ca9e6ff78677116a415a51109472a9e0d893d024439cc465b7/spacy-2.3.9.tar.gz
+
+# previous attempts at ensuring compatibility
 #spacy>=2.2.0,<3.0.0 # For compatibility with en_core_web_sm 
-spacy==2.2.2 # For compatibility with en_core_web_sm and md
+# For compatibility with en_core_web_sm and md
 #https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.2/en_core_web_sm-2.2.2.tar.gz
 https://files.pythonhosted.org/packages/fe/e2/81233a60e63fa94bfbddbe2c0902d1c50d80ef33666630683e9b2486f501/spacy-2.2.2.tar.gz
 #https://files.pythonhosted.org/packages/c4/1b/13b2f64373479f100ab2e1535430ad9e3c6d715059e5f3ca05d03a714c4d/spacy-2.2.2-cp38-cp38-win_amd64.whl
